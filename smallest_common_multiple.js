@@ -1,5 +1,3 @@
-
-
 function smallestCommons(arr) {
   const min = Math.min(...arr);
   const max = Math.max(...arr);
