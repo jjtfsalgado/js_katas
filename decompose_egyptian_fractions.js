@@ -57,7 +57,7 @@ function convertToFraction(x) {
     } 
 }
 
-decompose("50/4187")
+decompose("50/4187") //result [ '1/84', '1/27055', '1/1359351418' ]
 
 
 
