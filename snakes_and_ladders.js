@@ -9,10 +9,7 @@ const portals = {
   [51]:67,
   [71]:91,  
   [78]:98,
-  [87]:94
-}
-
-const holes = {
+  [87]:94,
   [16]:6,
   [46]:25,
   [49]:11,
@@ -25,9 +22,9 @@ const holes = {
   [99]:80
 }
 
-
 function SnakesLadders() {
   this.player = "Player 1";
+  this.winner = null;
   this.scores = {
     ["Player 1"]: 0,
     ["Player 2"]: 0
@@ -39,37 +36,37 @@ function SnakesLadders() {
   }
 
   this.registScore = function(player, score){
-    const scr = this.scores[player] + score;
-    console.log(scr)
+    let scr = this.scores[player] + score;
 
-    if(portals[scr]){
-      return this.scores[player] = portals[scr]
-    }else {
-      return this.scores[player] = scr
+    if(scr > 100){
+      const diff = scr - 100;
+      scr = 100 - diff;
     }
+    
+    if(portals[scr]){
+      scr = portals[scr]
+    }
+
+    return this.scores[player] = scr;
   }
 };
 
 SnakesLadders.prototype.play = function(die1, die2) {
   const currentPlayer = this.player;
-  if(die1 !== die2){
+  if(this.winner){
+    return "Game over!";
+  }else if(die1 !== die2){
     this.alternate(currentPlayer)
   }
 
   const score = this.registScore(currentPlayer, die1 + die2);
 
   if(score === 100){
-    return currentPlayer  + " Wins";  
+    this.winner = currentPlayer;
+    return currentPlayer  + " Wins!";  
   }
 
   return currentPlayer  + " is on square " + score;
-}
-
-SnakesLadders.prototype.alternate = function(die1, die2) {
-
-  const currentPlayer = this.nexPlayer == "Player 2" ? "Player 1" : "Player 2";
-  this.nextPlayer = "Player 1"
-  return currentPlayer  + " is on square " + (+die1+die2);
 }
 
 var game = new SnakesLadders();
