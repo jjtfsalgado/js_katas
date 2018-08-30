@@ -1,13 +1,16 @@
 function deleteNth(arr,x){
-    const duplicates = countDuplicates(arr);
+    let duplicates = countDuplicates(arr);
 
-
-    for (let key of Object.keys(duplicates)) {
-      if(duplicates[key]>=x){
-        arr.splice(arr.reverse().findIndex(i => i==key), 1)
-        return arr.reverse()
-      }
+    while(Object.values(duplicates).find(i => i > x)){
+        for (let key of Object.keys(duplicates)) {
+          if(duplicates[key]>x){
+            arr.splice(arr.reverse().findIndex(i => i==key), 1)
+            arr.reverse()
+          }
+        }
+        duplicates = countDuplicates(arr)
     }
+   return arr 
 }
 
 function countDuplicates(arr){
@@ -19,3 +22,7 @@ function countDuplicates(arr){
       }
     }, {})
 }
+
+deleteNth([2, 15, 15, 2, 15, 2, 2, 2, 15, 15, 15, 15, 1, 15, 1, 2, 15, 15, 2, 2],7)
+
+// [2, 15, 15, 2, 15, 2, 2, 2, 15, 15, 15, 15, 1, 1, 2, 2]
