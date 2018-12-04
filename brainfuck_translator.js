@@ -1,36 +1,74 @@
 const translatorDicionary = {
-    ["+"]: "*p += X;\n",
-    ["-"]: "*p -= X;\n",
-    [">"]: "p += Y;\n",
-    ["<"]: "p -= Y;\n",
-    ["."]: "putchar(*p);\n",
-    [","]: "*p = getchar();\n",
-    ["["]: "if (*p) do {\\n",
-    ["]"]: "} while (*p);\\n"
+    values:{
+        ["+"]: (x) => `*p += ${x};\n`,
+        ["-"]: (x) => `*p -= ${x};\n`,
+        [">"]: (x) => `p += ${x};\n`,
+        ["<"]: (x) => `p -= ${x};\n`,
+        ["."]: (x) => "putchar(*p);\n",
+        [","]: (x) => "*p = getchar();\n",
+        ["["]: (x) => "if (*p) do {\\n",
+        ["]"]: (x) => "} while (*p);\\n",
+    },
+    getValue(v, nr){
+       return this.values[v](nr);
+    }
 };
 
 function brainfuck_to_c(sc){
     let container = '';
+    const counter = {};
+
+    sc = optimize(sc);
 
     for(let i = 0 ; i < sc.length; i ++){
         const charac = sc[i];
         const characNext = sc[i+1];
 
-        if(charac == "+" && characNext == "-" || charac == "<" && characNext == ">" || charac == "[" && characNext == "]" || charac == characNext){
+        counter[charac] = ++counter[charac] || 1;
+
+        if(charac === characNext){
             continue;
         }
 
-        container += translatorDicionary[charac];
+        container += translatorDicionary.getValue(charac, counter[charac]);
     }
 
     return container;
 }
 
+function optimize (sc){
+    for(let i = 0 ; i < sc.length; i ++){
+        const charac = sc[i];
+        const characNext = sc[i+1];
 
-function optimization(){
+        counter[charac] = ++counter[charac] || 1;
 
+        if(charac === "+" && characNext === "-" || charac === "<" && characNext === ">" || charac === "[" && characNext === "]"){
+            continue;
+        }
+
+        container += translatorDicionary.getValue(charac, counter[charac]);
+    }
 }
 
+
+// console.log(brainfuck_to_c("[[[]]"));
+
+// console.log(brainfuck_to_c("++++"));
+// console.log(brainfuck_to_c("----"));
+//
+// console.log(brainfuck_to_c(">>>>"));
+// console.log(brainfuck_to_c("<<<<"));
+//
+// console.log(brainfuck_to_c("."));
+// console.log(brainfuck_to_c(","));
+
+console.log(brainfuck_to_c("[][]"));
+//
+// console.log(brainfuck_to_c("[.]"));
+
+
+// (\[])(?=(?:.*(\+-))?)(?=(?:.*(\<>))?+)
 
 // Examples
 // Input:
@@ -44,20 +82,4 @@ function optimization(){
 //     p -= 1;
 // *p -= 1;
 // } while (*p);
-
 //Code url -> https://www.codewars.com/kata/brainfuck-translator/train/javascript
-
-console.log(brainfuck_to_c("++++"));
-// brainfuck_to_c("----");
-//
-// brainfuck_to_c(">>>>");
-// brainfuck_to_c("<<<<");
-//
-// brainfuck_to_c(".");
-// brainfuck_to_c(",");
-//
-// brainfuck_to_c("[[[]]");
-//
-// brainfuck_to_c("[][]");
-//
-// brainfuck_to_c("[.]");
