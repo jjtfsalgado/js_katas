@@ -37,20 +37,14 @@ function brainfuck_to_c(sc){
 }
 
 function optimize (sc){
-    for(let i = 0 ; i < sc.length; i ++){
-        const charac = sc[i];
-        const characNext = sc[i+1];
-
-        counter[charac] = ++counter[charac] || 1;
-
-        if(charac === "+" && characNext === "-" || charac === "<" && characNext === ">" || charac === "[" && characNext === "]"){
-            continue;
-        }
-
-        container += translatorDicionary.getValue(charac, counter[charac]);
+    const reg = /(\[])(?=(?:.*(\+-))?)(?=(?:.*(\<>))?)/g;
+    while(sc.match(reg)){
+        sc = sc.replace(reg, "");
     }
+    return sc;
 }
 
+console.log(optimize("++--+."));
 
 // console.log(brainfuck_to_c("[[[]]"));
 
@@ -63,7 +57,7 @@ function optimize (sc){
 // console.log(brainfuck_to_c("."));
 // console.log(brainfuck_to_c(","));
 
-console.log(brainfuck_to_c("[][]"));
+// console.log(brainfuck_to_c("[][]"));
 //
 // console.log(brainfuck_to_c("[.]"));
 
