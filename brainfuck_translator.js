@@ -10,15 +10,20 @@ const translatorDicionary = {
 };
 
 function brainfuck_to_c(sc){
+    let container = '';
+
     for(let i = 0 ; i < sc.length; i ++){
         const charac = sc[i];
         const characNext = sc[i+1];
 
-        // if(charac == "+" && characNext == "-" || charac == "<" && characNext == "-")
+        if(charac == "+" && characNext == "-" || charac == "<" && characNext == ">" || charac == "[" && characNext == "]" || charac == characNext){
+            continue;
+        }
 
+        container += translatorDicionary[charac];
     }
 
-    return ;
+    return container;
 }
 
 
@@ -42,7 +47,7 @@ function optimization(){
 
 //Code url -> https://www.codewars.com/kata/brainfuck-translator/train/javascript
 
-brainfuck_to_c("++++");
+console.log(brainfuck_to_c("++++"));
 // brainfuck_to_c("----");
 //
 // brainfuck_to_c(">>>>");
