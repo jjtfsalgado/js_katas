@@ -4,10 +4,10 @@ const translatorDicionary = {
         ["-"]: (x) => `*p -= ${x};\n`,
         [">"]: (x) => `p += ${x};\n`,
         ["<"]: (x) => `p -= ${x};\n`,
-        ["."]: (x) => "putchar(*p);\n",
-        [","]: (x) => "*p = getchar();\n",
-        ["["]: (x) => "if (*p) do {\\n",
-        ["]"]: (x) => "} while (*p);\\n",
+        ["."]: (x) => "putchar(*p);\n".repeat(x),
+        [","]: (x) => "*p = getchar();\n".repeat(x),
+        ["["]: (x) => "if (*p) do {\n  ",
+        ["]"]: (x) => "} while (*p);\n",
     },
     getValue(v, nr){
        return this.values[v](nr);
@@ -15,10 +15,14 @@ const translatorDicionary = {
 };
 
 function brainfuck_to_c(sc){
-    let container = '';
+    let container = [];
     const counter = {};
 
     sc = optimize(sc);
+
+    if(sc.includes("[") && !sc.includes("]") || !sc.includes("[") && sc.includes("]") || sc.match(/\]\[/g)){
+        return "Error!"
+    }
 
     for(let i = 0 ; i < sc.length; i ++){
         const charac = sc[i];
@@ -30,21 +34,22 @@ function brainfuck_to_c(sc){
             continue;
         }
 
-        container += translatorDicionary.getValue(charac, counter[charac]);
+        container.push(translatorDicionary.getValue(charac, counter[charac]));
     }
 
-    return container;
+    return container.join(" ");
 }
 
 function optimize (sc){
-    const reg = /(\[])(?=(?:.*(\+-))?)(?=(?:.*(\<>))?)/g;
-    while(sc.match(reg)){
-        sc = sc.replace(reg, "");
+    const regEx = /(\[]|\<>|\+-|\><|\s)/g;
+
+    while(sc.match(regEx)){
+        sc = sc.replace(regEx, "");
     }
     return sc;
 }
 
-console.log(optimize("++--+."));
+// console.log(optimize("[[[]]"));
 
 // console.log(brainfuck_to_c("[[[]]"));
 
@@ -59,7 +64,7 @@ console.log(optimize("++--+."));
 
 // console.log(brainfuck_to_c("[][]"));
 //
-// console.log(brainfuck_to_c("[.]"));
+console.log(brainfuck_to_c("[[.]]"));
 
 
 // (\[])(?=(?:.*(\+-))?)(?=(?:.*(\<>))?+)
