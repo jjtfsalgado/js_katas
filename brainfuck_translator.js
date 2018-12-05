@@ -1,3 +1,5 @@
+//UNFINISHED
+
 const translatorDicionary = {
     values:{
         ["+"]: (x) => `*p += ${x};\n`,
@@ -82,3 +84,5 @@ console.log(brainfuck_to_c("[[.]]"));
 // *p -= 1;
 // } while (*p);
 //Code url -> https://www.codewars.com/kata/brainfuck-translator/train/javascript
+
+
