@@ -26,15 +26,16 @@
 
 function properFractions(d){
     //your code here
+    if(d == 1){return 0;}
     let counter = 0;
 
-    for(var i = 0; i < d; i++){
+    for(var i = 0; i < d/10; i++){
         if(gcd(i,d) == 1){
             counter ++
         }
     }
 
-    return counter
+    return counter * 10;
 }
 
 function gcd(a,b){
