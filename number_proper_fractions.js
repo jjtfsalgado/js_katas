@@ -1,6 +1,6 @@
 function properFractions(n){
-    if(n == 1){return 0;}
-    var array, x, i;
+    if(n === 1){return 0;}
+    let array, x, i;
     if (n === 1 || 0) {
         return n;
     } else {
@@ -14,7 +14,7 @@ function properFractions(n){
 }
 
 function fatt (num) {
-    var array = [], i = 2;
+    let array = [], i = 2;
     while (num > 1) {
         if (num % i === 0) {
             if (array.indexOf(i) < 0) array.push(i);
