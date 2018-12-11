@@ -8,8 +8,8 @@ function idBestUsers(a1, a2, a3) {
     // your code here
 
     const a1Data = a1.map(i => ({type: 1, item: i}));
-    const a1Data1 = a1.map(i => ({type: 2, item: i}));
-    const a1Data2 = a1.map(i => ({type: 3, item: i}));
+    const a1Data1 = a2.map(i => ({type: 2, item: i}));
+    const a1Data2 = a3.map(i => ({type: 3, item: i}));
 
     const data = [...a1Data, ...a1Data1, ...a1Data2];
 
@@ -32,6 +32,7 @@ function idBestUsers(a1, a2, a3) {
 
         return accum;
     }, {});
+
 
     return d;
 }
