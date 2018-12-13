@@ -1,17 +1,12 @@
-var a1 = ['A042', 'B004', 'A025', 'A042', 'C025'];
-var a2 = ['B009', 'B040', 'B004', 'A042', 'A025', 'A042'];
-var a3 = ['A042', 'A025', 'B004'];
 
-
-
-function idBestUsers(a1, a2, a3) {
-    // your code here
+function idBestUsers() {
     const result = [];
-    const a1Data = a1.map(i => ({type: 1, item: i}));
-    const a1Data1 = a2.map(i => ({type: 2, item: i}));
-    const a1Data2 = a3.map(i => ({type: 3, item: i}));
-
-    const data = [...a1Data, ...a1Data1, ...a1Data2];
+    const data = [];
+    const argumentsLenght = arguments.length;
+    for (let i = 0; i < argumentsLenght; i++) {
+        const d = arguments[i].map(j => ({type: i, item: j}));
+        data.push(...d);
+    }
 
     const d = data.reduce((accum , i) => {
         accum = accum || {};
@@ -33,24 +28,40 @@ function idBestUsers(a1, a2, a3) {
         return accum;
     }, {});
 
-    for(let i = Object.keys(i); i > 0; i++){
-        const item = d[i];
-        let counter = 0;
-        const itemKeys = Object.keys(item).length;
+    const dKeys = Object.keys(d);
 
-        if(itemKeys === 3){
-            for(let j = itemKeys; j > 0; j++){
-                counter += item[j]
+    for(let i = dKeys.length - 1 ; i >= 0; i--){
+        const key = dKeys[i];
+        const item = d[key];
+        const itemKeys = Object.keys(item);
+        if(itemKeys.length === argumentsLenght){
+            const nr = itemKeys.reduce((accum, i) => accum += item[i],0);
+            const existent = result.find(i => i[0] === nr);
+
+            if(existent){
+                existent[1].push(key);
+                existent[1].sort();
+            }else{
+                result.push([nr, [key]])
             }
-            result.push()
         }
     }
 
-    return d;
+    result.sort((a,b) => a[0] > b[0] ? -1 : 1);
+
+    return result;
 }
 
-idBestUsers(a1, a2, a3);
+// idBestUsers();
 
 
+// a1 = ['A042', 'B004', 'A025', 'A042', 'C025']
+// a2 = ['B009', 'B040', 'B004', 'A042', 'A025', 'A042']
+// a3 = ['A042', 'A025', 'B004']
+// The result will be:
+//
+// 'A042'---> 5 times
+// 'A025'---> 3 times
+// 'B004'---> 3 times
 
-// [[5, ['A042']], [3, ['A025', 'B004']]]
+// Code wars url -> https://www.codewars.com/kata/identifying-top-users-and-their-corresponding-purchases-on-a-website/javascript
