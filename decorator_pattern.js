@@ -7,7 +7,17 @@ function Decorator(options) {
 }
 
 Decorator.prototype.decorate = function decorate(fn) {
-    fn
+    const parameters = Array.prototype.slice.call(arguments, 1);
+    return (...args) => {
+        if(this.before){
+            args.unshift(...parameters);
+            return fn.apply(null, this.before.apply(null, args));
+        }else if(this.after){
+            return this.after.call(null, ...parameters, fn.apply(null, args));
+        }
+
+        return fn(...args);
+    }
 };
 
 function sum() {
@@ -39,21 +49,23 @@ function round(decimals) {
     }
 }
 
+//EXAMPLE
+// var filterDecorator = new Decorator({
+//     before : filter
+// });
+//
+// var filterNoNumbersDecorator = new Decorator({
+//     before : filterNoNumbers
+// });
+//
+// var roundDecorator = new Decorator({
+//     after: round
+// });
+//
+// var decoratedSum = filterDecorator.decorate(sum, 1, 9); // 1 and 9 are the min and max parameters passed to the filter function
+// decoratedSum = filterNoNumbersDecorator.decorate(decoratedSum);
+// decoratedSum = roundDecorator.decorate(decoratedSum, 2); // rounded to two decimals
+//
+// decoratedSum(-3, 1.016, 0, 4, NaN, 8.041, '27', 9, 12); // "22.06"
 
-var filterDecorator = new Decorator({
-    before : filter
-});
-
-var filterNoNumbersDecorator = new Decorator({
-    before : filterNoNumbers
-});
-
-var roundDecorator = new Decorator({
-    after: round
-});
-
-var decoratedSum = filterDecorator.decorate(sum, 1, 9); // 1 and 9 are the min and max parameters passed to the filter function
-decoratedSum = filterNoNumbersDecorator.decorate(decoratedSum);
-decoratedSum = roundDecorator.decorate(decoratedSum, 2); // rounded to two decimals
-
-decoratedSum(-3, 1.016, 0, 4, NaN, 8.041, '27', 9, 12); // "22.06"
+//Code wars url -> https://www.codewars.com/kata/decorator-pattern/javascript
