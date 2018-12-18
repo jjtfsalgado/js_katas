@@ -1,19 +1,20 @@
 function curryPartial(fn) {
-    const args = Array.prototype.slice.call(arguments, 1);
-    const result = 0;
-    // console.log(fn);
+    const results = [];
 
-    // const f = (ar) => {
-    //     ar ?  f(ar) : "result";
-    // };
+    return function f(a){
+        results.push(a);
+        console.log(arguments)
 
-    return (a) => a ? curryPartial(a) : result;
+        return (b) => f(b)
+    };
 }
+
 
 function add(x, y, z) {
     return x + y + z;
 }
 
-console.log(curryPartial(add)(1)(2)(3)); //6
+
+curryPartial(add)(2)(3)(4)(5)(6)(7)(8); //6
 // curryPartial(add, 0, 1)(2)
 // (2)(3); //6
