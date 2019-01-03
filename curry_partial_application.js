@@ -1,20 +1,34 @@
-function curryPartial(fn) {
-    const results = [];
-
-    return function f(a){
-        results.push(a);
-        console.log(arguments)
-
-        return (b) => f(b)
-    };
+function curry(fn) {
+    function nest(N, args) {
+        return (...xs) => {
+            if (N - xs.length <= 0) {
+                return fn(...args, ...xs);
+            }
+            return nest(N - xs.length, [...args, ...xs]);
+        };
+    }
+    return nest(fn.length, []);
 }
 
+
+
+function curryPartial(fn){
+    const parameters = Array.prototype.slice.call(arguments, 1);
+    function f(len, args) {
+        return (...a) => {
+            if(len - args.length <= 1){
+                return fn(...a, ...args);
+            }
+            return f(len - args.length, [...a, ...args]);
+        }
+    }
+    return f(fn.length, parameters);
+}
 
 function add(x, y, z) {
     return x + y + z;
 }
 
-
-curryPartial(add)(2)(3)(4)(5)(6)(7)(8); //6
-// curryPartial(add, 0, 1)(2)
-// (2)(3); //6
+console.log(curryPartial(add, 2)(3)(4)); //9
+console.log(curryPartial(add)(2)(3)(4)); //9
+console.log(curryPartial(add, 2, 3)(4)); //9
