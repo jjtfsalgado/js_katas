@@ -2,7 +2,7 @@ function curryPartial(fn){
     const parameters = Array.prototype.slice.call(arguments, 1);
     function f(len, args) {
         return (...a) => {
-            if(len - args.length <= 1){
+            if(len - args.length < 2){
                 return fn(...a, ...args);
             }
             return f(len - args.length, [...a, ...args]);
