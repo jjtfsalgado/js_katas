@@ -3,18 +3,18 @@
 var timesFive = function () {
     var five = 5;
     return function (a) {
-        return five * x;
+        return five * a;
     };
 }();
 
-var x = 1;
 
 function defaultArguments(func, params) {
     // console.log(func);
     if(func.prototype) {
         this.parameters = {};
         this.func = func;
-        const capture = func.toString().match(/\((...*)\)/);
+        console.log(func.toString());
+        const capture = func.toString().match(/\((.*)\)/);
 
         if (capture) {
             const parameters = capture[1].split(',');
@@ -28,7 +28,7 @@ function defaultArguments(func, params) {
         const parameters = [];
         Object.keys(this.parameters).forEach((i, index) => parameters.push(args[index] || this.parameters[i]));
 
-        // console.log(parameters)
+        console.log(parameters, this.parameters)
         console.log(this.func.apply(null,parameters))
     }
 }
