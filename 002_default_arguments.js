@@ -1,20 +1,17 @@
-
-
-var timesFive = function () {
-    var five = 5;
-    return function (a) {
-        return five * a;
-    };
-}();
-
-
+function addComments( a, // comments
+                      b /* more comments */ ) { return a+b; }
 function defaultArguments(func, params) {
     // console.log(func);
     if(func.prototype) {
         this.parameters = {};
         this.func = func;
         console.log(func.toString());
-        const capture = func.toString().match(/\((.*)\)/);
+        let fString = func.toString();
+        //remove js comments
+        fString = fString.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, "");
+        console.log(fString);
+        const capture = fString.match(/\((.*)\)/);
+        console.log(capture);
 
         if (capture) {
             const parameters = capture[1].split(',');
@@ -26,19 +23,19 @@ function defaultArguments(func, params) {
 
     return (...args) => {
         const parameters = [];
-        Object.keys(this.parameters).forEach((i, index) => parameters.push(args[index] || this.parameters[i]));
+        Object.keys(this.parameters).forEach((i, index) => {
+            // console.log(args[index])
+            const arg = args[index];
+            const argsLegth = args.length;
+            if(index < argsLegth &&  arg === undefined){
+                parameters.push(undefined);
+            }else{
+                parameters.push(arg || this.parameters[i]);
+            }
+        });
 
-        console.log(parameters, this.parameters)
-        console.log(this.func.apply(null,parameters))
+        console.log(this.func.apply(null,parameters));
     }
 }
 
-defaultArguments(timesFive,{n:5})();
-
-// add(10); // returns 19
-// console.log(add_(10,7)); // returns 17
-// console.log(add_()); // returns NaN
-//
-// add_ = defaultArguments(add_,{b:3, a:2});
-// console.log(add_(10)); // returns 13 now
-// console.log(add_()); // returns 5
+defaultArguments(addComments)(10);
