@@ -1,17 +1,15 @@
 function addComments( a, // comments
                       b /* more comments */ ) { return a+b; }
+
 function defaultArguments(func, params) {
     // console.log(func);
     if(func.prototype) {
         this.parameters = {};
         this.func = func;
-        console.log(func.toString());
         let fString = func.toString();
         //remove js comments
-        fString = fString.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, "");
-        console.log(fString);
+        fString = fString.replace(/\/\/.*|\/\*[^]*\*\/|\s*/g, "");
         const capture = fString.match(/\((.*)\)/);
-        console.log(capture);
 
         if (capture) {
             const parameters = capture[1].split(',');
@@ -39,3 +37,5 @@ function defaultArguments(func, params) {
 }
 
 defaultArguments(addComments)(10);
+
+//Code wars url -> https://www.codewars.com/kata/52605419be184942d400003d
