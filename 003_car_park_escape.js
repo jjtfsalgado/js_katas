@@ -1,32 +1,33 @@
-const carpark = [[0, 0, 0, 0, 2]];
+const carpark = [[0, 2, 0, 0, 1],
+    [0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0]];
 
 function escape(carpark){
     const result = [];
-    let lastPos;
+    let lastIndex;
 
     for(let i = 0; i < carpark.length; i ++){
         const level = carpark[i];
-        const levelNext = carpark[i+1];
-        let c1,c2;
 
-        const init = level.findIndex(i => i === 2);
-        const stairs = levelNext ? level.findIndex(i => i === 1) : level.length-1;
+        const startIndex = i === 0 ? level.findIndex(i => i === 2) : lastIndex;
+        const endIndex = i === carpark.length - 1 ? level.length - 1  : level.findIndex(i => i === 1);
 
-        let start = init !== -1 ? init : lastPos !== stairs ? lastPos : false;
-
-        if(start || start === 0){
-            c1 = start > stairs ? "L" : "R";
-            c2 = start > stairs ? start-stairs : stairs-start;
+        if(startIndex !== endIndex){
+            let c1 = startIndex > endIndex ? "L" : "R";
+            let c2 = startIndex > endIndex ? startIndex-endIndex : endIndex-startIndex;
             result.push(c1+c2);
         }
 
-        levelNext && result.push("D1");
-        lastPos = stairs;
+        if(i !== carpark.length - 1){
+            result.push("D1");
+        }
+        lastIndex = endIndex;
     }
 
-    console.log(result)
+    return result
 }
 
-escape(carpark);
+console.log(escape(carpark));
 
 // const result = ["L4", "D1", "R4"];
