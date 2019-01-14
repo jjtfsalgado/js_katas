@@ -10,8 +10,8 @@ function escape(carpark){
     for(let i = 0; i < carpark.length; i ++){
         const level = carpark[i];
 
-        const startIndex = i === 0 ? level.findIndex(i => i === 2) : lastIndex;
-        const endIndex = i === carpark.length - 1 ? level.length - 1  : level.findIndex(i => i === 1);
+        const startIndex = i === 0 ? level.indexOf(2) : lastIndex;
+        const endIndex = i === carpark.length - 1 ? level.length - 1  : level.indexOf(1);
 
         if(startIndex !== endIndex){
             let c1 = startIndex > endIndex ? "L" : "R";
