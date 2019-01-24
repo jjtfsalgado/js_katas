@@ -1,13 +1,13 @@
 function primeFactorDecomposition(num) {
     let result = '';
-    var primeFactors = [];
+    const primeFactors = [];
     while (num % 2 === 0) {
         primeFactors.push(2);
         num = num / 2;
     }
 
-    var sqrtNum = Math.sqrt(num);
-    for (var i = 3; i <= sqrtNum; i++) {
+    const sqrtNum = Math.sqrt(num);
+    for (let i = 3; i <= sqrtNum; i++) {
         while (num % i === 0) {
             primeFactors.push(i);
             num = num / i;
