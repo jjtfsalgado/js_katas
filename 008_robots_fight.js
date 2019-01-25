@@ -1,56 +1,17 @@
-const robot1 = { name: 'Rocky',
-    health: 699,
-    speed: 51,
-    tactics:
-        [ 'punch',
-            'punch',
-            'laser',
-            'missile',
-            'punch',
-            'laser',
-            'missile',
-            'punch',
-            'laser',
-            'missile',
-            'punch',
-            'laser',
-            'missile' ] }
-
-const robot2 = { name: 'Missile Bob',
-    health: 515,
-    speed: 28,
-    tactics:
-        [ 'punch',
-            'punch',
-            'laser',
-            'missile',
-            'punch',
-            'laser',
-            'missile',
-            'punch',
-            'laser',
-            'missile',
-            'punch',
-            'laser',
-            'missile' ] }
-
-const tactics = { punch: 20, laser: 30, missile: 35 }
-
 function fight(robot1, robot2, tactics) {
-    const robotAttacking = robot1.speed > robot2.speed ? robot1 : robot2;
-    const robotDefending = robot1.speed < robot2.speed ? robot1 : robot2;
+    let robotAttacking = robot1;
+    let robotDefending = robot2;
 
-    return attack(robotAttacking || robot1, robotDefending || robot2);
-};
-
-function attack(robotAttacking, robotDefending) {
-    if(!robotAttacking.tactics.length){
-        return attack(robotDefending, robotAttacking);
+    if(robot1.speed < robot2.speed){
+        robotAttacking = robot2;
+        robotDefending = robot1;
     }
 
-    const damage = tactics[robotAttacking.tactics[0]];
-    robotDefending.health -= damage;
-    robotAttacking.tactics.splice(0,1);
+
+    return attack(robotAttacking, robotDefending, tactics);
+};
+
+function attack(robotAttacking, robotDefending, tactics) {
 
     if (!robotDefending.tactics.length && !robotAttacking.tactics.length){
         if(robot1.health === robot2.health){
@@ -58,11 +19,19 @@ function attack(robotAttacking, robotDefending) {
         }
         const winner = robot1.health > robot2.health ? robot1 : robot2;
         return `${winner.name} has won the fight.`;
-    }else if(robotDefending.health <= 0){
+    }
+
+    if(robotAttacking.tactics.length){
+        const damage = tactics[robotAttacking.tactics[0]];
+        robotDefending.health -= damage;
+        robotAttacking.tactics.splice(0,1);
+    }
+
+    if(robotDefending.health <= 0){
         return `${robotAttacking.name} has won the fight.`;
     }
 
-    return attack(robotDefending, robotAttacking);
-};
+    console.log(robotDefending, robotAttacking, tactics)
 
-console.log(fight(robot1, robot2, tactics));
+    return attack(robotDefending, robotAttacking, tactics);
+};
