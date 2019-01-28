@@ -11,27 +11,23 @@ function fight(robot1, robot2, tactics) {
     return attack(robotAttacking, robotDefending, tactics);
 };
 
-function attack(robotAttacking, robotDefending, tactics) {
+function attack(r1, r2, tactics) {
 
-    if (!robotDefending.tactics.length && !robotAttacking.tactics.length){
+    if (!r2.tactics.length && !r1.tactics.length){
         if(robot1.health === robot2.health){
             return 'The fight was a draw.';
         }
-        const winner = robot1.health > robot2.health ? robot1 : robot2;
+        const winner = r1.health > r2.health ? r1 : r2;
         return `${winner.name} has won the fight.`;
     }
 
-    if(robotAttacking.tactics.length){
-        const damage = tactics[robotAttacking.tactics[0]];
-        robotDefending.health -= damage;
-        robotAttacking.tactics.splice(0,1);
+    if(r2.health <= 0){
+        return `${r1.name} has won the fight.`;
+    }else if(r1.tactics.length){
+        const damage = tactics[r1.tactics[0]];
+        r2.health -= damage;
+        r1.tactics.splice(0,1);
     }
 
-    if(robotDefending.health <= 0){
-        return `${robotAttacking.name} has won the fight.`;
-    }
-
-    console.log(robotDefending, robotAttacking, tactics)
-
-    return attack(robotDefending, robotAttacking, tactics);
+    return attack(r2, r1, tactics);
 };
