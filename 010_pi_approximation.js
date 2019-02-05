@@ -1,15 +1,12 @@
 function iterPi(epsilon) {
     const piJs = Math.PI;
-    var v = 0;
-    var it = 0;
-    for (var j,i = 1; i <= 10000000; ++j,i += 4) {
-        v +=  1 / i - 1 / (i + 2);
-        var pi = v * 4
-
-        if(Math.abs(piJs - pi) < epsilon){
-            return [j*2, +(pi).toFixed(10)]
-        }
+    let pi = 0, iter = 0, negPos =1;
+    while(Math.abs(piJs - (pi * 4)) >= epsilon){
+        pi += negPos/(iter * 2 + 1);
+        ++iter;
+        negPos *= -1;
     }
+    return [iter, +(pi * 4).toFixed(10)]
 };
 
-console.log(iterPi(0.001))
+console.log(iterPi(0.001));
