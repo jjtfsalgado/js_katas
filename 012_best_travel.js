@@ -1,6 +1,26 @@
 function chooseBestSum(t, k, ls) {
-    // your code
+    let result = 0;
+
+    if(ls.length < k){
+        return null;
+    }
+
+    ls.sort();
+
+    for (let i = ls.length - 1; i > 0; i--) {
+        const v = ls[i];
+        if((+result + v) > t){
+            console.log(result)
+            return result;
+        }
+        result += v
+    }
 }
+
+ts = [50, 55, 56, 57, 58];
+chooseBestSum(163, 3, ts);
+
+
 
 // ts = [50, 55, 56, 57, 58] choose_best_sum(163, 3, ts) -> 163
 //
