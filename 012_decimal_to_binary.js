@@ -10,8 +10,10 @@ function decimalToBinay(number){
         number = Math.floor(number / 2)
     }
 
-    return result;
+    return result.reverse().join("");
 }
 
 
 console.log(decimalToBinay(16));
+
+
