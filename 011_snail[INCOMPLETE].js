@@ -1,21 +1,31 @@
-snail = (array) => {
-    const snail = [];
-    const size = array.length;
+const snail = (array, result, counter) => {
+    result = result || [];
+    const size = array.length - counter;
 
-    for (let i = 0; i < array.length; i++) {
-        const arr = array[i];
 
-        if((size - i) === array.length){
-            snail.push(...arr);
-            continue;
+    for (let i = 0; i < 4; i++) {
+        if(i === 0){
+            result.push(...array[0])
+        }else if(i === 1){
+            for (let j = 1; j < size - 1; j++) {
+                const ar = array[j];
+                result.push(ar[size - 1])
+            }
+        }else if(i === 2){
+            result.push(...array[array.length - 1].reverse())
+        }else if(i === 3){
+            for (let j = size - 2; j > 1; j--) {
+                const ar = array[j];
+                result.push(ar[0])
+            }
         }
 
-        for (let j = 0; j < arr.length; j++) {
-
-
-            console.log(array[i][j]);
+        if(size > (array.length / 2)){
+            snail(array, result, ++counter)
         }
     }
+
+    return snail;
 };
 
 array3 = [ [1,2,3,4,5],
