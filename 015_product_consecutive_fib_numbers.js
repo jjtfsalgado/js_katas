@@ -1,29 +1,18 @@
-function productFib(prod){
-
-
-
-}
-
 function fib(n) {
-
     const result = [0, 1];
     for (var i = 2; i < n; i++) {
         const current = result[i-2] + result[i-1];
         const previous = result[i-1];
-        console.log(current, previous);
-
-        if(current * previous >= n){
-            return [previous,current, true];
+        if(current * previous === n){
+            return [previous, current , true];
+        }else if(current * previous >= n){
+            return [previous, current, false];
         }
         result.push(current);
     }
-
-
-    return result; // or result[n-1] if you want to get the nth term
-
 }
 
-console.log(fib(5895));
+console.log(fib(84049690));
 
 
 // Test.assertSimilar(productFib(4895), [55, 89, true])
