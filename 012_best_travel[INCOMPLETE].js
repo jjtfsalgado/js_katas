@@ -7,59 +7,53 @@ function chooseBestSum(t, k, ls) {
         return ls[0];
     }
 
-    let sum = null;
-    let comb = ls.map(i => [i]);
-
-    while(k > 1){
-        const obj = generateComb(comb, ls, t, sum);
-        sum = obj.sum;
-        comb = obj.result;
-        --k;
-    }
-
-    return sum || null
+    return getSum(t, k, ls);
 }
-
 
 function sumArr(arr){
     return arr.reduce((accum, value) => accum += value, 0)
 }
 
-function generateComb(source, target, maximum, sum){
-    const result = [];
+function getSum(maximum, nr, target){
+    let sum = null;
 
-    for (let j = 0; j < source.length; j++) {
-        const c = source[j];
+    for (let j = 0; j < target.length; ++j) {
+
+        if((j + nr - 1) > target.length){
+            continue
+        }
+
+        const subArr = target.slice(j, j + nr - 1);
 
         for (let i = 0; i < target.length; i++) {
             const l = target[i];
-            if(c.includes(l)){
+
+            if(subArr.includes(l)){
                 continue;
             }
 
-            const arr = [...c, l];
-
+            const arr = subArr.concat(l);
             const s = sumArr(arr);
 
             if(s > sum && s <= maximum ){
                 sum = s
             };
-
-            result.push(arr);
         }
     }
 
-    return {result, sum};
+    return sum;
 }
 
 
 // const ts = [50];
-ts = [ 91, 74, 73, 85, 73, 81, 87 ];
+// ts = [ 91, 74, 73, 85, 73, 81, 87 ];
+ts = [50, 55, 56, 57, 58]
+// [91, 74, 73, 85, 73, 81, 87]
 // ts = [50, 55, 57, 58, 60];
 // ts = [91, 74, 73, 85, 73, 81, 87]
 // console.log(chooseBestSum(174, 3, ts));
+console.log(chooseBestSum(163, 3, ts));
 // console.log(chooseBestSum(163, 3, ts));
-console.log(chooseBestSum(331, 1, ts));
 
 
 
