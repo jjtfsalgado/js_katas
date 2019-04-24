@@ -1,41 +1,23 @@
-
-
 function chooseBestSum(t, k, ls) {
-    if(k > ls.length){
-        return null;
-    }else if(k === 1){
-        return ls[0];
-    }
-
-    return getSum(t, k, ls);
-}
-
-function sumArr(arr){
-    return arr.reduce((accum, value) => accum += value, 0)
-}
-
-function getSum(maximum, nr, target){
     let sum = null;
 
-    for (let j = 0; j < target.length; ++j) {
+    for (let j = k; j < ls.length; j+= k) {
+        const previous = ls[j - k];
+        const subArr = previous ? [ls[j], previous] : ls.slice(0, k);
 
-        if((j + nr - 1) > target.length){
-            continue
-        }
-
-        const subArr = target.slice(j, j + nr - 1);
-
-        for (let i = 0; i < target.length; i++) {
-            const l = target[i];
-
+        for (let i = 0; i < ls.length; i++) {
+            const l = ls[i];
             if(subArr.includes(l)){
                 continue;
             }
-
             const arr = subArr.concat(l);
+            console.log(arr)
+
             const s = sumArr(arr);
 
-            if(s > sum && s <= maximum ){
+
+
+            if(s > sum && s <= t ){
                 sum = s
             };
         }
@@ -44,15 +26,24 @@ function getSum(maximum, nr, target){
     return sum;
 }
 
+function loop(){
+
+}
+
+function sumArr(arr){
+    return arr.reduce((accum, value) => accum += value, 0)
+}
+
 
 // const ts = [50];
 // ts = [ 91, 74, 73, 85, 73, 81, 87 ];
-ts = [50, 55, 56, 57, 58]
+// ts = [ 91, 74, 73, 85, 73, 81, 87 ]
+ts = [ 100, 76, 56, 44, 89, 73, 68, 56, 64, 123, 2333, 144, 50, 132, 123, 34, 89 ];
 // [91, 74, 73, 85, 73, 81, 87]
-// ts = [50, 55, 57, 58, 60];
+ts = [50, 55, 57, 58, 60];
 // ts = [91, 74, 73, 85, 73, 81, 87]
-// console.log(chooseBestSum(174, 3, ts));
-console.log(chooseBestSum(163, 3, ts));
+console.log(chooseBestSum(174, 3, ts));
+// console.log(chooseBestSum(2430, 15, ts)); //1287
 // console.log(chooseBestSum(163, 3, ts));
 
 
