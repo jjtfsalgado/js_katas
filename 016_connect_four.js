@@ -29,12 +29,21 @@ function analyseWinner(data){
     }
 
     //check diagonal
-    for (let i = 0; i <= 6; i++) {
-        for (let j = 0; j <= 4; j++) {
-            const l = arrays[i][j];
+    traverse(arrays);
+}
 
-            consecfour(arrays.map(j => j[i]))
+function traverse(arrays){
+    const xx = 7;
+    const yy = 6;
+
+    for (let i = xx; i > 0; i--) {
+        const arr = [];
+        for (let j = i ; j < yy; j++) {
+            arr.push(arrays[i][j]);
         }
+
+        console.log(arr)
+        // consecfour(arrays.map(j => j[i]))
     }
 }
 
