@@ -1,6 +1,4 @@
 //7*5
-
-
 function whoIsWinner(piecesPositionList) {
     const data = {
         A: [],
