@@ -20,9 +20,6 @@ function whoIsWinner(piecesPositionList) {
             return res;
         }
     }
-
-    console.log(data);
-
     return "Draw";
 }
 
@@ -45,7 +42,7 @@ function analyseWinner(data){
         }
     }
 
-    //check diagonal
+    //check diagonal both directions
     const traverseArrs = traverse(arrays);
     for (let i = 0; i < traverseArrs.length; i++) {
         const res = consecfour(traverseArrs[i]);
@@ -55,80 +52,33 @@ function analyseWinner(data){
     }
 }
 
-
-console.log(traverse([[1,2,3,4],[5,6,7,8],[9,10,11,12]]));
-// `
-// 4 8 12
-// 3 7 11
-// 2 6 10
-// 1 5 9
-// `
-//
-// `
-// 1st arr[0][0]
-//
-// 2st arr[0][1]
-//     arr[1][0]
-//
-// 3st arr[0][2]
-//     arr[1][1]
-//     arr[2][0]
-//
-// 4st arr[0][3]
-//     arr[1][2]
-//     arr[2][1]
-// `
-//
-//     `
-// 1st arr[2][0]
-//
-// 2st arr[1][0]
-//     arr[2][1]
-//
-// 3st arr[0][0]
-//     arr[1][1]
-//     arr[2][2]
-//
-// 4st arr[0][1]
-//     arr[1][2]
-//     arr[2][3]
-// `
-
-
-
 function traverse(arrays){
     const container = [];
 
-    const xx = arrays.length - 1;
-    const yy = arrays[0].length - 1;
+    const xx = arrays.length;
+    const yy = arrays[0].length;
 
-    // for (let i = xx; i >= 0; i--) {
-    //     const arr = [];
-    //     for (let j = 0 ; j <= xx-i; j++) {
-    //         arr.push(arrays[i+j][j]);
-    //     }
-    //     console.log(arr)
-    // }
+    const size = (xx >= yy ? xx : yy);
 
-    // for (let j = -yy; j < yy; j++){
-    //     const arr = [];
-    //     for (let i = 0; i <= xx; i++) {
-    //         arr.push(arrays[i][(yy-i)+j]);
-    //     }
-    //     console.log(arr)
-    // }
-
-    for (let j = yy; j > 0; j--){
+    for (let j = -size; j <= size; j++){
         const arr = [];
-        for (let i = 0; i <= xx; i++) {
-            const f = j-(yy-i);
-            console.log(`x:${xx-i} y:${f}`);
-            // arr.push(arrays[xx-i] && arrays[xx-i][f]);
-        }
-        console.log(arr)
-    }
+        const arr2 = [];
 
-    //todo traver on the other two directions
+        //horizontal
+        for (let i = 0; i < xx; i++) {
+            const v = arrays[i][xx-(i+j)];
+            v && arr.push(v);
+        }
+
+        //vertical
+        for (let i = 0; i < yy; i++) {
+            const v = arrays[j+i] && arrays[j+i][i];
+            v && arr2.push(v);
+        }
+
+        arr.length && container.push(arr);
+        arr2.length && container.push(arr2)
+    }
 
     return container;
 }
@@ -169,34 +119,36 @@ function consecfour(arr){
 //     'F_Yellow' ])); //Red
 
 
-// Test.assertEquals(whoIsWinner(["C_Yellow",
-//     "E_Red",
-//     "G_Yellow",
-//     "B_Red",
-//     "D_Yellow",
-//     "B_Red",
-//     "B_Yellow",
-//     "G_Red",
-//     "C_Yellow",
-//     "C_Red",
-//     "D_Yellow",
-//     "F_Red",
-//     "E_Yellow",
-//     "A_Red",
-//     "A_Yellow",
-//     "G_Red",
-//     "A_Yellow",
-//     "F_Red",
-//     "F_Yellow",
-//     "D_Red",
-//     "B_Yellow",
-//     "E_Red",
-//     "D_Yellow",
-//     "A_Red",
-//     "G_Yellow",
-//     "D_Red",
-//     "D_Yellow",
-//     "C_Red"]), "Yellow");
+console.log(whoIsWinner(["C_Yellow",
+    "E_Red",
+    "G_Yellow",
+    "B_Red",
+    "D_Yellow",
+    "B_Red",
+    "B_Yellow",
+    "G_Red",
+    "C_Yellow",
+    "C_Red",
+    "D_Yellow",
+    "F_Red",
+    "E_Yellow",
+    "A_Red",
+    "A_Yellow",
+    "G_Red",
+    "A_Yellow",
+    "F_Red",
+    "F_Yellow",
+    "D_Red",
+    "B_Yellow",
+    "E_Red",
+    "D_Yellow",
+    "A_Red",
+    "G_Yellow",
+    "D_Red",
+    "D_Yellow",
+    "C_Red"]))//, "Yellow");
+
+
 // Test.assertEquals(whoIsWinner(["A_Yellow",
 //     "B_Red",
 //     "B_Yellow",
