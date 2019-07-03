@@ -25,26 +25,26 @@ function whoIsWinner(piecesPositionList) {
 function analyseWinner(data){
     const arrays = Object.values(data);
 
-    //check vertical
-    for (let i = 0; i < arrays.length; i++) {
-         const res = consecfour(arrays[i]);
-         if(res){
-             return res;
-         }
-    }
-
-    //check horizontal
-    for (let i = 0; i < 5; i++) {
-        const res = consecfour(arrays.map(j => j[i]));
+    //check diagonal both directions
+    const traverseArrs = traverse(arrays);
+    for (let i = 0; i < traverseArrs.length; i++) {
+        const res = consecfour(traverseArrs[i]);
         if(res){
             return res;
         }
     }
 
-    //check diagonal both directions
-    const traverseArrs = traverse(arrays);
-    for (let i = 0; i < traverseArrs.length; i++) {
-        const res = consecfour(traverseArrs[i]);
+    //check vertical
+    for (let i = 0; i < arrays.length; i++) {
+        const res = consecfour(arrays[i]);
+        if(res){
+            return res;
+        }
+    }
+
+    //check horizontal
+    for (let i = 0; i < 5; i++) {
+        const res = consecfour(arrays.map(j => j[i]));
         if(res){
             return res;
         }
@@ -55,7 +55,7 @@ function traverse(arrays){
     const container = [];
 
     const xx = arrays.length;
-    const yy = arrays[0].length;
+    const yy = Math.max(...arrays.map(i => i.length));
 
     const size = (xx >= yy ? xx : yy);
 
@@ -66,13 +66,13 @@ function traverse(arrays){
         //horizontal
         for (let i = 0; i < xx; i++) {
             const v = arrays[i][xx-(i+j)];
-            v && arr.push(v);
+            arr.push(v);
         }
 
         //vertical
         for (let i = 0; i < yy; i++) {
             const v = arrays[j+i] && arrays[j+i][i];
-            v && arr2.push(v);
+            arr2.push(v);
         }
 
         arr.length && container.push(arr);
