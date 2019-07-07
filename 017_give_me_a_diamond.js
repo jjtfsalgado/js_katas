@@ -1,17 +1,28 @@
 function diamond(n){
-    let d = null;
-    const unit = "*\n*";
+    const result = [];
 
-    while(n > 2){
-        const arr = new Array(n).fill(unit);
-        d ? d += arr.join("") : d = arr.join("");
-        n -= 1;
+    if(n<3){
+        return null;
     }
 
-    console.log(d);
-    return d;
+    for (let i = 0; i < n; i++) {
+        let m = Math.trunc(n/2); //3
+        let layer = "";
+        let star = (i < m ? (n - i - m - 1) : (i - m));
+
+        for (let j = 0; j < n; j++) {
+            if(j >= star && j < (n-star)){
+                layer += "*"
+            }else if(j < star){
+                layer += " ";
+            }
+        }
+        result.push(layer+"\n");
+    }
+
+    return result.join("");
 };
 
-diamond(3);
+console.log(diamond(7));
 
 // numberToEnglish(1.9);
