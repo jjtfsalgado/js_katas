@@ -12,7 +12,19 @@ function encrypt(text, n) {
 }
 
 function decrypt(encryptedText, n) {
-    return encrypt(encryptedText, 4 - n)
+    if(n < 1 || !n){return encryptedText};
+
+    const original = encryptedText;
+    const container = [];
+    let res = original;
+
+    do{
+        res = encrypt(res, 1);
+        container.unshift(res)
+
+    }while (res !== original);
+
+    return container[n === container.length ? 0 : n]
 }
 
 //
@@ -31,13 +43,14 @@ function decrypt(encryptedText, n) {
 
 const text = "This is a test!";
 
-console.log(1%4);
+console.log(decrypt("XEWBPMQDMOYNZOKYWNITUOIEVQTWPI", 6));
+//'YXWENWIBTPUMOQIDEMVOQYTNWZPOIK'
 
 // console.log(encrypt("This kata is very interesting!", 1));
 // console.log(encrypt("This kata is very interesting!", 2));
 // console.log(encrypt("This kata is very interesting!", 3));
 // console.log(encrypt("This kata is very interesting!", 4));
-const input = "This kata!";
+const input = "s eT ashi tist!";
 
 console.log(input.length);
 
