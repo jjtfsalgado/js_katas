@@ -1,21 +1,31 @@
 const array = [50, 55, 57, 58, 60 ];
 const n = 3;
-
 const container = [];
 
-function recur(z){
-    if(z === n) return container;
+function loop(arr, start) {
 
-    const c = [];
 
-    for (let j = 0; j < n; j++) {
-        c.push(array[n - (n - j) + (z === j ? z : 0)])
+    for (let i = start || 0; i < array.length; i++) {
+        const a = arr.concat(i);
+
+        if (a.length < n) {
+            loop(a, start + 1);
+        }else if(a.length === n){
+            container.push(a);
+        }
     }
+}
 
-    container.push(c);
-
-    return recur(++z);
+function start(){
+    for (let i = 0; i < n; i++) {
+        loop([i], i + 1);
+    }
+    console.log(container)
 }
 
 
-console.log(recur( 0));
+start();
+
+
+
+
