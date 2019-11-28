@@ -3,16 +3,23 @@ const str = "I.was.going.fishing.that.morning.at.ten.o'clock";
 
 
 function code(t) {
+
     const l = t.length;
 
 
     let n = 1;
     while((n * n) < l){
-        t += t.charCodeAt(10);
+        t += t.charCodeAt(11);
         ++n;
     }
 
-    console.log(t)
+    const arr = t.split("");
+
+    for (let i = n; i < arr.length; i+= n) {
+        arr[i] = '\\';
+    }
+
+    console.log(arr)
 }
 
 
