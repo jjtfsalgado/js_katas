@@ -16,7 +16,7 @@ function code(t) {
     const arr = t.split("");
 
     for (let i = n; i < arr.length; i+= n) {
-        arr[i] = '\\';
+        arr[i] = "\n";
     }
 
     console.log(arr)
