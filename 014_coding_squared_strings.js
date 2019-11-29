@@ -3,25 +3,46 @@ const str = "I.was.going.fishing.that.morning.at.ten.o'clock";
 
 
 function code(t) {
-
+    const container = [];
     const l = t.length;
-
-
     let n = 1;
     while((n * n) < l){
-        t += t.charCodeAt(11);
         ++n;
+    }
+
+    while(t.length < (n*n)){
+        t += String.fromCharCode(11);
     }
 
     const arr = t.split("");
 
     for (let i = n; i < arr.length; i+= n) {
-        arr[i] = "\n";
+        container.push(arr.slice(i, i+n))
     }
+    const r = rotate(container);
 
-    console.log(arr)
+    const result  = r.reduce((accum, i) => accum += (i.join("") + "\n"), "");
+
+    console.log(result, r)
+
+    // console.log(r, container)
 }
 
+function rotate(matrix) {
+    const container = [];
+    const l = matrix.length;
+    for (let i = l; i >= 0; i--) {
+        const ix = l - i;
+        if(!matrix[i]){
+            continue
+        }
+
+        matrix[i].forEach((item, j) => {
+            const s = (container[j] ? (container[j][ix] = item) : (container[j] = [item]))
+        });
+    }
+    return container;
+};
 
 function decode(s) {
 
