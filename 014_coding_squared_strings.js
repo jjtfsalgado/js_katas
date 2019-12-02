@@ -19,7 +19,10 @@ function code(t) {
     for (let i = 0; i < arr.length; i+= n) {
         container.push(arr.slice(i, i+n))
     }
+
     const r = rotate(container);
+
+    // console.log(r)
 
     const result  = r.reduce((accum, i) => accum += (i.join("") + "\n"), "");
 
@@ -29,17 +32,13 @@ function code(t) {
 }
 
 function rotate(matrix) {
-    console.log(matrix)
-
     const container = [];
-    const l = matrix.length;
+    const l = matrix.length - 1;
     for (let i = l; i >= 0; i--) {
         const ix = l - i;
 
-        matrix[i - 1].forEach((item, j) => {
-            console.log(j, ix)
-
-            const s = (container[j] ? (container[j][ix] = item) : (container[j] = [item]))
+        matrix[i].forEach((item, j) => {
+           (container[j] ? (container[j][ix] = item) : (container[j] = [item]))
         });
     }
     return container;
