@@ -16,7 +16,7 @@ function code(t) {
 
     const arr = t.split("");
 
-    for (let i = n; i < arr.length; i+= n) {
+    for (let i = 0; i < arr.length; i+= n) {
         container.push(arr.slice(i, i+n))
     }
     const r = rotate(container);
@@ -29,15 +29,16 @@ function code(t) {
 }
 
 function rotate(matrix) {
+    console.log(matrix)
+
     const container = [];
     const l = matrix.length;
     for (let i = l; i >= 0; i--) {
         const ix = l - i;
-        if(!matrix[i]){
-            continue
-        }
 
-        matrix[i].forEach((item, j) => {
+        matrix[i - 1].forEach((item, j) => {
+            console.log(j, ix)
+
             const s = (container[j] ? (container[j][ix] = item) : (container[j] = [item]))
         });
     }
