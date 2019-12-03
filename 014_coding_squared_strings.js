@@ -1,56 +1,56 @@
 const str = "I.was.going.fishing.that.morning.at.ten.o'clock";
-
-
+const codedStr = "c.nhsoI\nltiahi.\noentinw\ncng.nga\nk..mg.s\n\voao.f.\n\v'trtig";
 
 function code(t) {
+    if(!t) return t;
     const container = [];
     const l = t.length;
     let n = 1;
     while((n * n) < l){
         ++n;
     }
-
     while(t.length < (n*n)){
         t += String.fromCharCode(11);
     }
-
     const arr = t.split("");
-
     for (let i = 0; i < arr.length; i+= n) {
         container.push(arr.slice(i, i+n))
     }
-
     const r = rotate(container);
-
-    // console.log(r)
-
-    const result  = r.reduce((accum, i) => accum += (i.join("") + "\n"), "");
-
-    console.log(result, r)
-
-    // console.log(r, container)
+    return r.map((i) => i.join("")).join("\n");
 }
 
-function rotate(matrix) {
+function rotate(matrix, clockWise = true) {
     const container = [];
     const l = matrix.length - 1;
     for (let i = l; i >= 0; i--) {
-        const ix = l - i;
-
+        const ix = clockWise ? l - i : i;
         matrix[i].forEach((item, j) => {
-           (container[j] ? (container[j][ix] = item) : (container[j] = [item]))
+            if(!container[j]){
+                const arr = [];
+                arr[ix] = item;
+                container[j] = arr
+            }
+
+            container[j][ix] = item;
         });
     }
+
+    if(!clockWise) container.reverse();
     return container;
 };
 
 function decode(s) {
-
+    if(!s) return s;
+    const matrix = s.split("\n").map(i => i.split(""));
+    const r = rotate(matrix, false);
+    return r.map(i => i.filter( j => j !== String.fromCharCode(11))).map(i => i.join("")).join("")
 }
 
 const codedS = code(str);
 
-console.log(codedS)
+const d = decode(codedS);
+
 
 // decode(codedS);
 
