@@ -58,18 +58,25 @@ function table(results) {
             if(isDraw){
                 t1.points = 1;
                 t2.points = 1;
-                t1.won = 1;
             }else if(isWin){
                 t1.points = 3;
                 t2.points = 0;
-   
+                t1.won = 1;
+                t2.lost = 1;
             }
 
-            t1.scored = capture[2];
-            t2.scored = capture[3];
+            t1.scored = t2.taken = capture[2];
+            t2.scored = t1.taken = capture[3];
         }
 
         data.push(...[t1,t2]);
     }
+
+    data.sort((a,b) => a.points < b.points);
     console.log(data);
+
+    const result = data.map((i, ix) => `${ix}. ${i.name}`);
+
+
+    console.log(result);
 }
