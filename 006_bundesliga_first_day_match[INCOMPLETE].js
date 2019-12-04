@@ -47,7 +47,6 @@ function table(results) {
         const result = results[i];
 
         const capture = (/((\d+):(\d+)|(-:-))\s(.+)\s-\s(.+)/gm).exec(result);
-        console.log(capture);
         const t1 = new TeamResult(capture[5], 0, 0, 0, 0, 0);
         const t2 = new TeamResult(capture[6], 0, 0, 0, 0 , 0);
 
@@ -72,7 +71,7 @@ function table(results) {
         data.push(...[t1,t2]);
     }
 
-    data.sort((a,b) => a.points < b.points);
+    data.sort((a,b) => a.points < b.points ? 1 : -1);
     console.log(data);
 
     const result = data.map((i, ix) => `${ix}. ${i.name}`);
