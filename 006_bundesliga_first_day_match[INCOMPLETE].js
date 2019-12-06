@@ -59,15 +59,12 @@ function table(results) {
             const isWin = capture[2] > capture[3];
 
             if(isDraw){
-                t1.points = 1;
-                t2.points = 1;
-                t1.drew = 1;
-                t2.drew = 1;
+                t1.points = t2.points = 1;
+                t1.drew = t2.drew = 1;
             }else if(isWin){
                 t1.points = 3;
                 t2.points = 0;
-                t1.won = 1;
-                t2.lost = 1;
+                t1.won = t2.lost = 1;
             }
 
             t1.scored = t2.taken = capture[2];
