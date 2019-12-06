@@ -32,23 +32,27 @@ const results = [
 
 const actualTable = table(results);
 
-function TeamResult(name, points, scored, taken, won, lost) {
+function TeamResult(name, points, scored, taken, won, lost, drew, position) {
     this.name = name;
-    this.points = points;
-    this.scored = scored;
-    this.taken = taken;
-    this.won = won;
-    this.lost = lost;
+    this.points = points || 0;
+    this.scored = scored || 0;
+    this.taken = taken || 0;
+    this.won = won || 0;
+    this.lost = lost || 0;
+    this.drew = drew || 0 ;
+    this.position = position || 0;
 }
 
 function table(results) {
     const data = [];
     for (let i = 0; i < results.length; i ++){
         const result = results[i];
-
         const capture = (/((\d+):(\d+)|(-:-))\s(.+)\s-\s(.+)/gm).exec(result);
-        const t1 = new TeamResult(capture[5], 0, 0, 0, 0, 0);
-        const t2 = new TeamResult(capture[6], 0, 0, 0, 0 , 0);
+
+        const t1Name = capture[5] + " ".repeat(30 - capture[5].length);
+        const t2Name = capture[6] + " ".repeat(30 - capture[6].length);
+        const t1 = new TeamResult(t1Name);
+        const t2 = new TeamResult(t2Name);
 
         if(capture[2] && capture[3]){
             const isDraw = capture[2] === capture[3];
@@ -57,6 +61,8 @@ function table(results) {
             if(isDraw){
                 t1.points = 1;
                 t2.points = 1;
+                t1.drew = 1;
+                t2.drew = 1;
             }else if(isWin){
                 t1.points = 3;
                 t2.points = 0;
@@ -72,10 +78,7 @@ function table(results) {
     }
 
     data.sort((a,b) => a.points < b.points ? 1 : -1);
-    console.log(data);
-
-    const result = data.map((i, ix) => `${ix}. ${i.name}`);
-
+    const result = data.map((i, ix) => `${ix.toString().length === 2 ? ix : ` ${ix}`}. ${i.name} ${i.won || i.lost || i.drew} ${i.won} ${i.drew} ${i.lost} ${i.scored}:${i.taken} ${i.points}\n`);
 
     console.log(result);
 }
