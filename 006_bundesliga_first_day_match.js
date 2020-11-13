@@ -116,20 +116,3 @@ function stringifyTeam(team, last) {
 
     return `${position}. ${name}${games}  ${team.won}  ${team.tie}  ${team.lost}  ${team.scored || 0}:${team.taken || 0}  ${team.points}${!last ? "\n" : ""}`
 }
-
-var test = ' 1. FC Bayern Muenchen            1  1  0  0  6:0  3\n 2. 1. FC Koeln                   0  0  0  0  0:0  0\n 2. Bayer Leverkusen              0  0  0  0  0:0  0\n 2. Borussia Dortmund             0  0  0  0  0:0  0\n 2. Borussia Moenchengladbach     0  0  0  0  0:0  0\n 2. Eintracht Frankfurt           0  0  0  0  0:0  0\n 2. FC Augsburg                   0  0  0  0  0:0  0\n 2. FC Ingolstadt                 0  0  0  0  0:0  0\n 2. FSV Mainz 05                  0  0  0  0  0:0  0\n 2. Hamburger SV                  0  0  0  0  0:0  0\n 2. Hertha BSC Berlin             0  0  0  0  0:0  0\n 2. RasenBall Leipzig             0  0  0  0  0:0  0\n 2. SC Freiburg                   0  0  0  0  0:0  0\n 2. Schalke 04                    0  0  0  0  0:0  0\n 2. SV Darmstadt                  0  0  0  0  0:0  0\n 2. TSG 1899 Hoffenheim           0  0  0  0  0:0  0\n 2. VfL Wolfsburg                 0  0  0  0  0:0  0\n18. Werder Bremen                 1  0  0  1  0:6  0\n',
-    instead
-// got: ' 1. FC Bayern Muenchen                      1 1 0 0 6:0 3\n 2. 1. FC Koeln                             0 0 0 0 0:0 0\n 2. Bayer Leverkusen                        0 0 0 0 0:0 0\n 2. Borussia Dortmund                       0 0 0 0 0:0 0\n 2. Borussia Moenchengladbach               0 0 0 0 0:0 0\n 2. Eintracht Frankfurt                     0 0 0 0 0:0 0\n 2. FC Augsburg                             0 0 0 0 0:0 0\n 2. FC Ingolstadt                           0 0 0 0 0:0 0\n 2. FSV Mainz 05                            0 0 0 0 0:0 0\n 2. Hamburger SV                            0 0 0 0 0:0 0\n 2. Hertha BSC Berlin                       0 0 0 0 0:0 0\n 2. RasenBall Leipzig                       0 0 0 0 0:0 0\n 2. SC Freiburg                             0 0 0 0 0:0 0\n 2. SV Darmstadt                            0 0 0 0 0:0 0\n 2. Schalke 04                              0 0 0 0 0:0 0\n 2. TSG 1899 Hoffenheim                     0 0 0 0 0:0 0\n 2. VfL Wolfsburg                           0 0 0 0 0:0 0\n18. Werder Bremen                           1 0 0 1 0:6 0\n'
-// console.log(test)
-
-
-for (let i = 0; i < test.length; i++) {
-    if(test[i] !== sol[i]){
-
-        console.log(test.substr(i - 2, 5))
-        console.log(sol.substr(i - 2, 5))
-    }
-}
-console.log(sol)
-console.log(test)
-console.log(sol === test)
