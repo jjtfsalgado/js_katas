@@ -1,7 +1,7 @@
-function persistence(num, count = 0) {
-    if(num < 10) return count;
+function persistence(num) {
+    if(num < 10) return 0;
     num = num.toString().split("").map(Number).reduce((accum, i) => accum*=i,1);
-    return persistence(num, ++count);
+    return 1 + persistence(num);
 }
 
 console.log(persistence(999))
